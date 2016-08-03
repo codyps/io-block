@@ -1,0 +1,10 @@
+[package]
+name = "gpt"
+version = "0.1.0"
+keywords = ["io", "block", "device"]
+authors = ["Cody P Schafer <dev@codyps.com>"]
+include = [ "Cargo.toml", "**/*rs" ]
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+io-at = "0.*"
