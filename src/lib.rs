@@ -1,30 +1,35 @@
-extern crate io_at;
+extern crate core;
 
 /**
- * GPT and most other partition-y things operate on items that have a known end & have a known "block size"
+ * Some writable and readable devices (disk drives, media cards) have a block size (number of bytes
+ * that are read or written at a time) associated with them.
  *
- * This provides an abstraction over that
+ * These devices also have a (relatively) fixed (or at least known) number of blocks that limits
+ * their length. At least, they can't be appended to.
+ *
  */
-trait BlockContainer : io_at::ReadAt + io_at::WriteAt {
-    fn block_sz(&self) -> u64;
-    fn block_ct(&self) -> u64;
+// TODO: consider if we should require ReadAt &/or WriteAt
+// TODO: consider if we should provide (here or in a seperate trait) read/write methods on blocks
+// of data.
+// TODO: consider providing block_sz_physical?
+trait BlockSize {
+    /// The number of bytes in each logical block
+    fn block_size_logical(&self) -> u64;
+
+    /// The total number of logical blocks
+    fn block_count(&self) -> u64;
+
+    /// The number of bytes in each physical block
+    ///
+    /// This is only a best guess. Many devices do not report a physical block size or do not
+    /// report and accurate physical block size. Results will vary, be wary.
+    fn block_size_physical(&self) -> u64 {
+        self.block_size_logical()
+    }
 
     // fn write_block();
     // fn read_block();
 }
 
-/**
- * Treat a normal File as a BlockContainer
- */
-struct BlockFile {
-    file: io::File,
-    block_sz: u64,
-    block_ct: u64,
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-    }
-}
+mod file;
+pub use file::BlockFile;
