@@ -10,20 +10,44 @@ extern crate ioctl;
 // discard-zero
 // rotational
 use std::io;
+use std::os::unix::io::{AsRawFd,IntoRawFd,FromRawFd,RawFd};
 
 struct BlockDev {
     // TODO: consider generalizing for other AsRawFd types
-    inner: io::File,
+    // TODO: consider just storing a RawFd instead of a File
+    inner: File,
+}
+
+impl AsRawFd for BlockDev {
+    fn as_raw_fd(&self) -> RawFd {
+        self.inner
+    }
+}
+
+impl FromRawFd for BlockDev {
+    unsafe fn from_raw_fd(fd: RawFd) -> BlockDev {
+        BlockDev::from_file_raw(File::from_raw_fd(fd))
+    }
+}
+
+impl IntoRawFd for BlockDev {
+    fn into_raw_fd(self) -> RawFd {
+        self.inner.into_raw_fd()
+    }
 }
 
 impl BlockDev {
-    fn from(i: io::File) -> io::Result<BlockDev> {
+    pub unsafe fn from_file_raw(i: io::File) -> BlockDev {
+        Ok(BlockDev { inner: i })
+    }
+
+    pub fn from_file(i: io::File) -> io::Result<BlockDev> {
         let m = try!(i.metadata());
         if !m.file_type().is_block_device() {
             return Err(io::Error::InvalidInput, "Not a block device");
         }
 
-        Ok(BlocKDev { inner: i })
+        unsafe { BlockDev::from_file_raw(i) }
     }
 }
 
