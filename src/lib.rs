@@ -1,4 +1,5 @@
 extern crate core;
+pub use std::io::{Error,Result};
 
 /**
  * Some writable and readable devices (disk drives, media cards) have a block size (number of bytes
@@ -14,16 +15,16 @@ extern crate core;
 // TODO: consider providing block_sz_physical?
 trait BlockSize {
     /// The number of bytes in each logical block
-    fn block_size_logical(&self) -> u64;
+    fn block_size_logical(&self) -> Result<u64>;
 
     /// The total number of logical blocks
-    fn block_count(&self) -> u64;
+    fn block_count(&self) -> Result<u64>;
 
     /// The number of bytes in each physical block
     ///
     /// This is only a best guess. Many devices do not report a physical block size or do not
     /// report and accurate physical block size. Results will vary, be wary.
-    fn block_size_physical(&self) -> u64 {
+    fn block_size_physical(&self) -> Result<u64> {
         self.block_size_logical()
     }
 
@@ -33,3 +34,5 @@ trait BlockSize {
 
 mod file;
 pub use file::BlockFile;
+
+mod os;

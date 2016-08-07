@@ -1,5 +1,6 @@
 use core::ops::{Deref,DerefMut};
-use super::BlockSize;
+use super::*;
+use BlockSize;
 
 /**
  * Wrap some type T in a block container
@@ -32,12 +33,12 @@ impl<T> Into<T> for BlockFile<T> {
 */
 
 impl<T> BlockSize for BlockFile<T> {
-    fn block_size_logical(&self) -> u64 {
-        self.block_sz
+    fn block_size_logical(&self) -> Result<u64> {
+        Ok(self.block_sz)
     }
 
-    fn block_count(&self) -> u64 {
-        self.block_ct
+    fn block_count(&self) -> Result<u64> {
+        Ok(self.block_ct)
     }
 }
 

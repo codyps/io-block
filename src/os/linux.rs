@@ -1,3 +1,4 @@
+extern crate ioctl;
 // ioctl
 //  BLKSSZGET - bdev_logical_block_size() - logical, int
 //  BLKPBSZGET - bdev_physical_block_size() - physical, uint
@@ -9,10 +10,6 @@
 // discard-zero
 // rotational
 use std::io;
-
-mod ffi {
-
-};
 
 struct BlockDev {
     // TODO: consider generalizing for other AsRawFd types
@@ -31,7 +28,23 @@ impl BlockDev {
 }
 
 impl BlockSize for BlockDev {
-    fn block_size(&self) -> u64 {
-        
+    fn block_size_logical(&self) -> Result<u64> {
+        let c : ioctl::libc::c_int = 0;
+        let r = unsafe { ioctl::blksszget(self.as_raw_fd(), &mut c) };
+        if r < 0 {
+            Err(Error::last_os_error())
+        } else {
+            Ok(c as u64)
+        }
+    }
+
+    fn block_count(&self) -> Result<u64> {
+        let c: ioctl::libc::uint64_t = 0;
+        let r = unsafe { ioctl::blkgetsize64(self.as_raw_fd(), &mut c) };
+        if r < 0 {
+            Err(Error::last_os_error())
+        } else {
+            Ok(c as u64)
+        }
     }
 }
