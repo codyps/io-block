@@ -35,4 +35,4 @@ trait BlockSize {
 mod file;
 pub use file::BlockFile;
 
-mod os;
+pub mod os;

@@ -9,10 +9,14 @@ extern crate ioctl;
 // align-offset
 // discard-zero
 // rotational
+use std::fs::File;
 use std::io;
 use std::os::unix::io::{AsRawFd,IntoRawFd,FromRawFd,RawFd};
+use std::os::unix::fs::FileTypeExt;
+use super::super::*;
+use BlockSize;
 
-struct BlockDev {
+pub struct BlockDev {
     // TODO: consider generalizing for other AsRawFd types
     // TODO: consider just storing a RawFd instead of a File
     inner: File,
@@ -20,7 +24,7 @@ struct BlockDev {
 
 impl AsRawFd for BlockDev {
     fn as_raw_fd(&self) -> RawFd {
-        self.inner
+        self.inner.as_raw_fd()
     }
 }
 
@@ -37,23 +41,33 @@ impl IntoRawFd for BlockDev {
 }
 
 impl BlockDev {
-    pub unsafe fn from_file_raw(i: io::File) -> BlockDev {
-        Ok(BlockDev { inner: i })
+    pub unsafe fn from_file_raw(i: File) -> BlockDev {
+        BlockDev { inner: i }
     }
 
-    pub fn from_file(i: io::File) -> io::Result<BlockDev> {
+    pub fn from_file(i: File) -> io::Result<BlockDev> {
         let m = try!(i.metadata());
         if !m.file_type().is_block_device() {
-            return Err(io::Error::InvalidInput, "Not a block device");
+            return Err(io::Error::new(io::ErrorKind::InvalidInput, "Not a block device"));
         }
 
-        unsafe { BlockDev::from_file_raw(i) }
+        Ok(unsafe { BlockDev::from_file_raw(i) })
+    }
+
+    pub fn ro(&self) -> io::Result<bool> {
+        let mut c: ioctl::libc::c_int = 0;
+        let r = unsafe { ioctl::blkroget(self.as_raw_fd(), &mut c) };
+        if r < 0 {
+            Err(io::Error::last_os_error())
+        } else {
+            Ok(c != 0)
+        }
     }
 }
 
 impl BlockSize for BlockDev {
     fn block_size_logical(&self) -> Result<u64> {
-        let c : ioctl::libc::c_int = 0;
+        let mut c : ioctl::libc::c_int = 0;
         let r = unsafe { ioctl::blksszget(self.as_raw_fd(), &mut c) };
         if r < 0 {
             Err(Error::last_os_error())
@@ -63,7 +77,7 @@ impl BlockSize for BlockDev {
     }
 
     fn block_count(&self) -> Result<u64> {
-        let c: ioctl::libc::uint64_t = 0;
+        let mut c: ioctl::libc::uint64_t = 0;
         let r = unsafe { ioctl::blkgetsize64(self.as_raw_fd(), &mut c) };
         if r < 0 {
             Err(Error::last_os_error())

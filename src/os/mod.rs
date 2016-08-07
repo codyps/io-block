@@ -1,2 +1,2 @@
-#[cfg(linux)]
-mod linux;
+#[cfg(target_os = "linux")]
+pub mod linux;
