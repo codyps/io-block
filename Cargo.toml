@@ -1,5 +1,5 @@
 [package]
-name = "blockdev"
+name = "io-block"
 version = "0.1.0"
 keywords = ["io", "block", "device"]
 authors = ["Cody P Schafer <dev@codyps.com>"]
