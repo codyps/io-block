@@ -1,4 +1,4 @@
-extern crate ioctl;
+extern crate ioctl_sys as ioctl;
 // ioctl
 //  BLKSSZGET - bdev_logical_block_size() - logical, int
 //  BLKPBSZGET - bdev_physical_block_size() - physical, uint
@@ -13,6 +13,7 @@ use std::fs::File;
 use std::io;
 use std::os::unix::io::{AsRawFd,IntoRawFd,FromRawFd,RawFd};
 use std::os::unix::fs::FileTypeExt;
+use std::os::raw::{c_int};
 use super::super::*;
 use BlockSize;
 
@@ -55,7 +56,7 @@ impl BlockDev {
     }
 
     pub fn ro(&self) -> io::Result<bool> {
-        let mut c: ioctl::libc::c_int = 0;
+        let mut c: c_int = 0;
         let r = unsafe { ioctl::blkroget(self.as_raw_fd(), &mut c) };
         if r < 0 {
             Err(io::Error::last_os_error())
@@ -67,7 +68,7 @@ impl BlockDev {
 
 impl BlockSize for BlockDev {
     fn block_size_logical(&self) -> Result<u64> {
-        let mut c : ioctl::libc::c_int = 0;
+        let mut c : c_int = 0;
         let r = unsafe { ioctl::blksszget(self.as_raw_fd(), &mut c) };
         if r < 0 {
             Err(Error::last_os_error())
@@ -77,7 +78,7 @@ impl BlockSize for BlockDev {
     }
 
     fn block_count(&self) -> Result<u64> {
-        let mut c: ioctl::libc::uint64_t = 0;
+        let mut c: u64 = 0;
         let r = unsafe { ioctl::blkgetsize64(self.as_raw_fd(), &mut c) };
         if r < 0 {
             Err(Error::last_os_error())

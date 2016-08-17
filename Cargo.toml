@@ -6,5 +6,5 @@ authors = ["Cody P Schafer <dev@codyps.com>"]
 include = [ "Cargo.toml", "**/*.rs" ]
 license = "MIT OR Apache-2.0"
 
-[dependencies]
-ioctl = "0.3"
+[target.'cfg(target_os = "linux")'.dependencies]
+ioctl-sys = "0.4"
