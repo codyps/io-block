@@ -1,6 +1,5 @@
 use core::ops::{Deref,DerefMut};
 use super::*;
-use BlockSize;
 
 /**
  * Wrap some type T in a block container

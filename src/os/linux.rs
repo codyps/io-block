@@ -15,7 +15,6 @@ use std::os::unix::io::{AsRawFd,IntoRawFd,FromRawFd,RawFd};
 use std::os::unix::fs::FileTypeExt;
 use std::os::raw::{c_int};
 use super::super::*;
-use BlockSize;
 
 pub struct BlockDev {
     // TODO: consider generalizing for other AsRawFd types
