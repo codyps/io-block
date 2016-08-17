@@ -13,7 +13,7 @@ pub use std::io::{Error,Result};
 // TODO: consider if we should provide (here or in a seperate trait) read/write methods on blocks
 // of data.
 // TODO: consider providing block_sz_physical?
-trait BlockSize {
+pub trait BlockSize {
     /// The number of bytes in each logical block
     fn block_size_logical(&self) -> Result<u64>;
 
