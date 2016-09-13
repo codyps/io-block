@@ -1,4 +1,4 @@
-extern crate ioctl_sys as ioctl;
+extern crate ioctls as ioctl;
 // ioctl
 //  BLKSSZGET - bdev_logical_block_size() - logical, int
 //  BLKPBSZGET - bdev_physical_block_size() - physical, uint

@@ -1,6 +1,6 @@
 [package]
 name = "io-block"
-version = "0.1.2"
+version = "0.1.3"
 keywords = ["io", "block", "device"]
 authors = ["Cody P Schafer <dev@codyps.com>"]
 include = [ "Cargo.toml", "**/*.rs" ]
@@ -9,4 +9,4 @@ description = "Work with block devices and other block-like things in rust"
 repository = "https://github.com/jmesmon/io-block"
 
 [target.'cfg(target_os = "linux")'.dependencies]
-ioctl-sys = "0.4"
+ioctls = "0.5"
