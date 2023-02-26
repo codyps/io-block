@@ -9,4 +9,4 @@ description = "Work with block devices and other block-like things in rust"
 repository = "https://github.com/jmesmon/io-block"
 
 [target.'cfg(target_os = "linux")'.dependencies]
-ioctls = "0.5"
+ioctls = "0.6"
