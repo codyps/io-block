@@ -1,0 +1,56 @@
+name: ci
+on:
+  push:
+    branches-ignore:
+      - '**.tmp'
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: beta
+          profile: minimal
+          override: true
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v1
+
+      - uses: actions-rs/clippy-check@v1
+        if: success() || failure()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features --all-targets
+
+      - uses: actions-rs/cargo@v1
+        if: success() || failure()
+        with:
+          command: fmt
+          args: --all -- --check
+
+      - name: Build
+        if: success() || failure()
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --all-targets
+
+      - name: Test
+        if: success() || failure()
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all-targets
+
+      - uses: actions-rs/cargo@v1
+        if: success() || failure()
+        with:
+          command: clippy
+          args: -- -D warnings
+
