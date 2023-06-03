@@ -1,4 +1,8 @@
+// FIXME: permission failures occur opening disks even with `sudo`. Examine read/write open? Or
+// look at using `IoRegistryEntryCreateCFProperties` to get the details as `diskutil` does.
+//
 // https://opensource.apple.com/source/xnu/xnu-7195.81.3/bsd/sys/disk.h.auto.html
+//
 
 //  * DKIOCGETPHYSICALBLOCKSIZE             get device's block size
 // #define DKIOCGETPHYSICALBLOCKSIZE             _IOR('d', 77, uint32_t)

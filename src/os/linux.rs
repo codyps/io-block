@@ -17,7 +17,7 @@ use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 
 use nix::{ioctl_none, ioctl_read, ioctl_read_bad, ioctl_write_ptr_bad, request_code_none};
 
-use super::super::*;
+use crate::BlockSize;
 
 ioctl_read_bad! {blksectget, request_code_none!(0x12, 103), c_ushort}
 ioctl_read_bad! {blksszget, request_code_none!(0x12, 104), c_int}
