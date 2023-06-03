@@ -93,6 +93,12 @@ impl IntoRawFd for BlockDev {
 }
 
 impl BlockDev {
+    /// Treat a file as a block device without checking
+    ///
+    /// # Safety
+    ///
+    /// `i` must refer to a block device file, otherwise the ioctls used by other functions may
+    /// have undesired effects, including reading and writing memory unexpectedly.
     pub unsafe fn from_file_raw(i: File) -> BlockDev {
         BlockDev { inner: i }
     }
@@ -115,6 +121,14 @@ impl BlockDev {
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
 
         Ok(c != 0)
+    }
+
+    pub fn block_io_min(&self) -> Result<u64> {
+        let mut c: c_int = 0;
+        unsafe { blkiomin(self.as_raw_fd(), &mut c) }
+            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
+
+        Ok(c)
     }
 }
 

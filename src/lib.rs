@@ -21,9 +21,7 @@ pub trait BlockSize {
     ///
     /// This is only a best guess. Many devices do not report a physical block size or do not
     /// report an accurate physical block size. Results will vary, be wary.
-    fn block_size_physical(&self) -> Result<u64> {
-        self.block_size_logical()
-    }
+    fn block_size_physical(&self) -> Result<u64>;
 
     // fn write_block();
     // fn read_block();

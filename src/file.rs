@@ -1,5 +1,5 @@
-use core::ops::{Deref,DerefMut};
 use super::*;
+use core::ops::{Deref, DerefMut};
 
 /**
  * Wrap some type T in a block container
@@ -39,14 +39,18 @@ impl<T> BlockSize for BlockFile<T> {
     fn block_count(&self) -> Result<u64> {
         Ok(self.block_ct)
     }
+
+    fn block_size_physical(&self) -> Result<u64> {
+        self.block_size_logical()
+    }
 }
 
 impl<T> BlockFile<T> {
     pub fn new(file: T, block_sz: u64, block_ct: u64) -> BlockFile<T> {
         BlockFile {
-            file: file,
-            block_sz: block_sz,
-            block_ct: block_ct,
+            file,
+            block_sz,
+            block_ct,
         }
     }
 }
@@ -54,6 +58,5 @@ impl<T> BlockFile<T> {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn blk_file() {
-    }
+    fn blk_file() {}
 }
