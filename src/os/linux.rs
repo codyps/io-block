@@ -18,7 +18,10 @@ use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 
 use nix::{ioctl_none, ioctl_read, ioctl_read_bad, ioctl_write_ptr_bad, request_code_none};
 
-use crate::BlockSize;
+pub trait BlockDevExt {
+    fn ro(&self) -> Result<bool>;
+    fn block_io_min(&self) -> Result<u32>;
+}
 
 ioctl_read_bad! {blksectget, request_code_none!(0x12, 103), c_ushort}
 ioctl_read_bad! {blksszget, request_code_none!(0x12, 104), c_int}
@@ -69,7 +72,7 @@ ioctl_none! {blkflsbuf, 0x12, 97}
 #define BLKGETDISKSEQ _IOR(0x12,128,__u64)
 */
 
-pub struct BlockDev {
+pub(crate) struct BlockDev {
     // TODO: consider generalizing for other AsRawFd types
     // TODO: consider just storing a RawFd instead of a File
     inner: File,
@@ -115,18 +118,20 @@ impl BlockDev {
 
         Ok(unsafe { BlockDev::from_file_raw(i) })
     }
+}
 
-    pub fn ro(&self) -> io::Result<bool> {
+impl BlockDevExt for crate::BlockDev {
+    fn ro(&self) -> io::Result<bool> {
         let mut c: c_int = 0;
-        unsafe { blkroget(self.as_raw_fd(), &mut c) }
+        unsafe { blkroget(self.inner.as_raw_fd(), &mut c) }
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
 
         Ok(c != 0)
     }
 
-    pub fn block_io_min(&self) -> Result<u32> {
+    fn block_io_min(&self) -> Result<u32> {
         let mut c: c_uint = 0;
-        unsafe { blkiomin(self.as_raw_fd(), &mut c) }
+        unsafe { blkiomin(self.inner.as_raw_fd(), &mut c) }
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
 
         Ok(c)

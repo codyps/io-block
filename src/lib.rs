@@ -10,7 +10,7 @@ use std::io::Result;
 // TODO: consider if we should provide (here or in a seperate trait) read/write methods on blocks
 // of data.
 // TODO: consider providing block_sz_physical?
-pub trait BlockSize {
+pub trait BlockDev {
     /// The number of bytes in each logical block
     fn block_size_logical(&self) -> Result<u64>;
 
