@@ -13,4 +13,4 @@ repository = "https://github.com/jmesmon/io-block"
 cfg-if = "1"
 
 [target.'cfg(any(target_os = "linux", target_vendor = "apple"))'.dependencies]
-nix = "*"
+nix = "0.26"
