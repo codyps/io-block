@@ -5,7 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.2.1 (2023-06-03)
+
+### Bug Fixes
+
+ - <csr-id-4401d7cfb0445734abd296275dea61848dc383dd/> docs link in cargo
+ - <csr-id-4054412438192694bcf862b0a5b667e2ece18c21/> remove old links from readme
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 2 commits contributed to the release.
+ - 2 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Docs link in cargo ([`4401d7c`](https://github.com/jmesmon/io-block/commit/4401d7cfb0445734abd296275dea61848dc383dd))
+    - Remove old links from readme ([`4054412`](https://github.com/jmesmon/io-block/commit/4054412438192694bcf862b0a5b667e2ece18c21))
+</details>
+
 ## v0.2.0 (2023-06-03)
+
+<csr-id-3f949b6edb8570bda2fa4641be31997e2f88c0d1/>
 
 ### Other
 
@@ -15,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 26 commits contributed to the release over the course of 2495 calendar days.
+ - 27 commits contributed to the release over the course of 2495 calendar days.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -26,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release io-block v0.2.0 ([`0294b48`](https://github.com/jmesmon/io-block/commit/0294b488b9c8548aa1008cda9c39fdc6ed45e48d))
     - Nix version ([`82a37e4`](https://github.com/jmesmon/io-block/commit/82a37e48cff325e1da2f4876fb2a89ced3aeaa6a))
     - Release io-block v0.1.4 ([`0658bab`](https://github.com/jmesmon/io-block/commit/0658bab6fa3ce3c6da17b599b37e47d636078b91))
     - Generic wrapper ([`ab0f618`](https://github.com/jmesmon/io-block/commit/ab0f618578a059669a4a08d9eec4a21c9a8e2d42))
