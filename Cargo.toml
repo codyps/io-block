@@ -9,5 +9,8 @@ license = "MIT OR Apache-2.0"
 description = "Work with block devices and other block-like things in rust"
 repository = "https://github.com/jmesmon/io-block"
 
-[target.'cfg(any(target_os = "linux", target_os = "darwin"))'.dependencies]
+[dependencies]
+cfg-if = "1"
+
+[target.'cfg(any(target_os = "linux", target_vendor = "apple"))'.dependencies]
 nix = "*"

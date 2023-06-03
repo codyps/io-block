@@ -6,7 +6,14 @@
 // #define DKIOCGETBLOCKSIZE                     _IOR('d', 24, uint32_t)
 // #define DKIOCGETBLOCKCOUNT                    _IOR('d', 25, uint64_t)
 
+use crate::BlockSize;
+
 use nix::ioctl_read;
+
+use std::fs::File;
+use std::io::{self, Result};
+use std::os::unix::fs::FileTypeExt;
+use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 
 ioctl_read! { dkiocgetphysicalblocksize, b'd', 77, u32 }
 ioctl_read! { dkiocgetblocksize, b'd', 24, u32 }
@@ -64,7 +71,7 @@ impl BlockSize for BlockDev {
         unsafe { dkiocgetblocksize(self.as_raw_fd(), &mut c) }
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
 
-        Ok(c)
+        Ok(c as u64)
     }
 
     fn block_count(&self) -> Result<u64> {
