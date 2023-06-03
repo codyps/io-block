@@ -123,8 +123,8 @@ impl BlockDev {
         Ok(c != 0)
     }
 
-    pub fn block_io_min(&self) -> Result<u64> {
-        let mut c: c_int = 0;
+    pub fn block_io_min(&self) -> Result<u32> {
+        let mut c: c_uint = 0;
         unsafe { blkiomin(self.as_raw_fd(), &mut c) }
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
 
