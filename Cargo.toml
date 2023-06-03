@@ -3,10 +3,11 @@ name = "io-block"
 version = "0.1.3"
 keywords = ["io", "block", "device"]
 authors = ["Cody P Schafer <dev@codyps.com>"]
+edition = "2021"
 include = [ "Cargo.toml", "**/*.rs" ]
 license = "MIT OR Apache-2.0"
 description = "Work with block devices and other block-like things in rust"
 repository = "https://github.com/jmesmon/io-block"
 
-[target.'cfg(target_os = "linux")'.dependencies]
-ioctls = "0.5"
+[target.'cfg(any(target_os = "linux", target_os = "darwin"))'.dependencies]
+nix = "*"
