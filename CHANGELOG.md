@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.2.2 (2023-06-03)
+
+### Bug Fixes
+
+ - <csr-id-aac29d8b8e7fbb3181114d6fe1673870e6ca002c/> linux build
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 1 commit contributed to the release.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Linux build ([`aac29d8`](https://github.com/jmesmon/io-block/commit/aac29d8b8e7fbb3181114d6fe1673870e6ca002c))
+</details>
+
 ## v0.2.1 (2023-06-03)
 
 ### Bug Fixes
@@ -16,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 2 commits contributed to the release.
+ - 3 commits contributed to the release.
  - 2 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -27,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release io-block v0.2.1 ([`3413bd2`](https://github.com/jmesmon/io-block/commit/3413bd2118bc7f6084a67e26059c10a88d90469c))
     - Docs link in cargo ([`4401d7c`](https://github.com/jmesmon/io-block/commit/4401d7cfb0445734abd296275dea61848dc383dd))
     - Remove old links from readme ([`4054412`](https://github.com/jmesmon/io-block/commit/4054412438192694bcf862b0a5b667e2ece18c21))
 </details>
