@@ -12,6 +12,7 @@
 use std::ffi::{c_int, c_uint, c_ushort};
 use std::fs::File;
 use std::io;
+use std::io::Result;
 use std::os::unix::fs::FileTypeExt;
 use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 

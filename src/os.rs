@@ -5,10 +5,10 @@ use std::io;
 
 cfg_if! {
     if #[cfg(target_os = "linux")] {
-        mod linux;
+        pub mod linux;
         use linux::BlockDev as OsBlockDev;
     } else if #[cfg(target_vendor = "apple")] {
-        mod darwin;
+        pub mod darwin;
         use darwin::BlockDev as OsBlockDev;
     } else {
         compile_error!("Unsupported OS");
