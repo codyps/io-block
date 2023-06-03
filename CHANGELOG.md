@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.1.4 (2023-06-03)
+## v0.2.0 (2023-06-03)
 
 ### Other
 
@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 24 commits contributed to the release over the course of 2495 calendar days.
+ - 26 commits contributed to the release over the course of 2495 calendar days.
  - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Nix version ([`82a37e4`](https://github.com/jmesmon/io-block/commit/82a37e48cff325e1da2f4876fb2a89ced3aeaa6a))
+    - Release io-block v0.1.4 ([`0658bab`](https://github.com/jmesmon/io-block/commit/0658bab6fa3ce3c6da17b599b37e47d636078b91))
     - Generic wrapper ([`ab0f618`](https://github.com/jmesmon/io-block/commit/ab0f618578a059669a4a08d9eec4a21c9a8e2d42))
     - Darwin builds ([`ccf0072`](https://github.com/jmesmon/io-block/commit/ccf00725959ba9df44a5a4981a31001e5b4d87b7))
     - Fixup! ([`1cbb92b`](https://github.com/jmesmon/io-block/commit/1cbb92b0dfc282a2640a2f7f499d6a3ca43371e6))
@@ -51,4 +53,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Things ([`cc01e59`](https://github.com/jmesmon/io-block/commit/cc01e59120b751baedd6fad29242cd8eda1ee72c))
     - Initial ([`9b40490`](https://github.com/jmesmon/io-block/commit/9b404906b13c21a354c40273bdbb6583ad5096f4))
 </details>
+
+## v0.1.4 (2023-06-03)
+
+<csr-id-3f949b6edb8570bda2fa4641be31997e2f88c0d1/>
+
+### Other
+
+ - <csr-id-3f949b6edb8570bda2fa4641be31997e2f88c0d1/> correct project base
 

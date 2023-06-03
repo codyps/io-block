@@ -1,6 +1,6 @@
 [package]
 name = "io-block"
-version = "0.1.4"
+version = "0.2.0"
 keywords = ["io", "block", "device"]
 authors = ["Cody P Schafer <dev@codyps.com>"]
 edition = "2021"
