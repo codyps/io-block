@@ -118,10 +118,32 @@ impl BlockDev {
 
         Ok(unsafe { BlockDev::from_file_raw(i) })
     }
-}
 
-impl BlockDevExt for crate::BlockDev {
-    fn ro(&self) -> io::Result<bool> {
+    pub fn block_size_logical(&self) -> Result<u64> {
+        let mut c: c_int = 0;
+        unsafe { blksszget(self.as_raw_fd(), &mut c) }
+            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
+
+        Ok(c as u64)
+    }
+
+    pub fn block_count(&self) -> Result<u64> {
+        let mut c: u64 = 0;
+        unsafe { blkgetsize64(self.as_raw_fd(), &mut c) }
+            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
+
+        Ok(c)
+    }
+
+    pub fn block_size_physical(&self) -> Result<u64> {
+        let mut c: c_uint = 0;
+        unsafe { blkpbszget(self.as_raw_fd(), &mut c) }
+            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
+
+        Ok(c as u64)
+    }
+
+    pub fn ro(&self) -> io::Result<bool> {
         let mut c: c_int = 0;
         unsafe { blkroget(self.inner.as_raw_fd(), &mut c) }
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
@@ -129,7 +151,7 @@ impl BlockDevExt for crate::BlockDev {
         Ok(c != 0)
     }
 
-    fn block_io_min(&self) -> Result<u32> {
+    pub fn block_io_min(&self) -> Result<u32> {
         let mut c: c_uint = 0;
         unsafe { blkiomin(self.inner.as_raw_fd(), &mut c) }
             .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
@@ -138,28 +160,12 @@ impl BlockDevExt for crate::BlockDev {
     }
 }
 
-impl BlockSize for BlockDev {
-    fn block_size_logical(&self) -> Result<u64> {
-        let mut c: c_int = 0;
-        unsafe { blksszget(self.as_raw_fd(), &mut c) }
-            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
-
-        Ok(c as u64)
+impl BlockDevExt for crate::os::BlockDev {
+    fn ro(&self) -> io::Result<bool> {
+        self.inner.ro()
     }
 
-    fn block_count(&self) -> Result<u64> {
-        let mut c: u64 = 0;
-        unsafe { blkgetsize64(self.as_raw_fd(), &mut c) }
-            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
-
-        Ok(c)
-    }
-
-    fn block_size_physical(&self) -> Result<u64> {
-        let mut c: c_uint = 0;
-        unsafe { blkpbszget(self.as_raw_fd(), &mut c) }
-            .map_err(|e| io::Error::from_raw_os_error(e as i32))?;
-
-        Ok(c as u64)
+    fn block_io_min(&self) -> Result<u32> {
+        self.inner.block_io_min()
     }
 }

@@ -1,10 +1,6 @@
-extern crate io_block;
-use io_block::os::BlockDev;
-use io_block::BlockSize;
-
 fn show_blk<T: AsRef<::std::path::Path>>(p: T) -> Result<(), ::std::io::Error> {
     let f = std::fs::File::open(p.as_ref())?;
-    let b = BlockDev::from_file(f)?;
+    let b = io_block::os::BlockDev::from_file(f)?;
     println!(
         "{:?}: block-size-logical: {:?}",
         p.as_ref(),

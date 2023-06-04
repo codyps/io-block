@@ -1,4 +1,3 @@
-use crate::BlockSize;
 use cfg_if::cfg_if;
 use std::fs::File;
 use std::io;
@@ -16,6 +15,8 @@ cfg_if! {
 
     // dragonflybsd: `getdisktabbyname`
     // freebsd: `getdiskbyname`
+    // windows: either something in Virtual Disk Service or `DeviceIoControl` with
+    // `IOCTL_DISK_GET_DRIVE_GEOMETRY` or Windows storage managment api
 }
 
 /// A block device on the target operating system
@@ -36,18 +37,30 @@ impl BlockDev {
             inner: OsBlockDev::from_file(i)?,
         })
     }
-}
 
-impl BlockSize for BlockDev {
-    fn block_size_physical(&self) -> io::Result<u64> {
+    pub fn block_size_physical(&self) -> io::Result<u64> {
         self.inner.block_size_physical()
     }
 
-    fn block_count(&self) -> io::Result<u64> {
+    pub fn block_count(&self) -> io::Result<u64> {
         self.inner.block_count()
     }
 
-    fn block_size_logical(&self) -> io::Result<u64> {
+    pub fn block_size_logical(&self) -> io::Result<u64> {
         self.inner.block_size_logical()
+    }
+}
+
+impl crate::BlockDev for BlockDev {
+    fn block_size_physical(&self) -> io::Result<u64> {
+        self.block_size_physical()
+    }
+
+    fn block_count(&self) -> io::Result<u64> {
+        self.block_count()
+    }
+
+    fn block_size_logical(&self) -> io::Result<u64> {
+        self.block_size_logical()
     }
 }
