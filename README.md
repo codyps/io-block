@@ -1,3 +1,8 @@
 # io-block
 
-Read and write at offsets (ie: pread & pwrite)
+Access details about block devices in various systems.
+
+
+## License
+
+Licensed under the Open Software License version 3.0
