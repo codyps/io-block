@@ -65,6 +65,18 @@ impl Disk {
 
         Ok(unsafe { Disk::from_file_raw(i) })
     }
+
+    pub fn as_file(&self) -> &File {
+        &self.inner
+    }
+
+    pub fn into_file(self) -> File {
+        self.inner
+    }
+
+    pub fn as_file_mut(&mut self) -> &mut File {
+        &mut self.inner
+    }
 }
 
 impl crate::BlockDevice for Disk {

@@ -54,6 +54,18 @@ impl Disk {
         })
     }
 
+    pub fn as_file(&self) -> &File {
+        self.inner.as_file()
+    }
+
+    pub fn into_file(self) -> File {
+        self.inner.into_file()
+    }
+
+    pub fn as_file_mut(&mut self) -> &mut File {
+        self.inner.as_file_mut()
+    }
+
     pub fn block_size_physical(&self) -> io::Result<u64> {
         self.inner.block_size_physical()
     }
