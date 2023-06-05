@@ -31,7 +31,7 @@ impl<T> Into<T> for BlockFile<T> {
 }
 */
 
-impl<T> crate::BlockDev for BlockFile<T> {
+impl<T> crate::BlockDevice for BlockFile<T> {
     fn block_size_logical(&self) -> Result<u64> {
         Ok(self.block_sz)
     }

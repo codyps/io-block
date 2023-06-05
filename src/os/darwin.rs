@@ -21,40 +21,40 @@ ioctl_read! { dkiocgetphysicalblocksize, b'd', 77, u32 }
 ioctl_read! { dkiocgetblocksize, b'd', 24, u32 }
 ioctl_read! { dkiocgetblockcount, b'd', 25, u64 }
 
-pub(crate) struct BlockDev {
+pub(crate) struct Disk {
     inner: File,
 }
 
-impl AsRawFd for BlockDev {
+impl AsRawFd for Disk {
     fn as_raw_fd(&self) -> RawFd {
         self.inner.as_raw_fd()
     }
 }
 
-impl FromRawFd for BlockDev {
-    unsafe fn from_raw_fd(fd: RawFd) -> BlockDev {
-        BlockDev::from_file_raw(File::from_raw_fd(fd))
+impl FromRawFd for Disk {
+    unsafe fn from_raw_fd(fd: RawFd) -> Disk {
+        Disk::from_file_raw(File::from_raw_fd(fd))
     }
 }
 
-impl IntoRawFd for BlockDev {
+impl IntoRawFd for Disk {
     fn into_raw_fd(self) -> RawFd {
         self.inner.into_raw_fd()
     }
 }
 
-impl BlockDev {
+impl Disk {
     /// Treat a file as a block device without checking
     ///
     /// # Safety
     ///
     /// `i` must refer to a block device file, otherwise the ioctls used by other functions may
     /// have undesired effects, including reading and writing memory unexpectedly.
-    pub unsafe fn from_file_raw(i: File) -> BlockDev {
-        BlockDev { inner: i }
+    pub unsafe fn from_file_raw(i: File) -> Disk {
+        Disk { inner: i }
     }
 
-    pub fn from_file(i: File) -> io::Result<BlockDev> {
+    pub fn from_file(i: File) -> io::Result<Disk> {
         let m = i.metadata()?;
         if !m.file_type().is_block_device() {
             return Err(io::Error::new(
@@ -63,11 +63,11 @@ impl BlockDev {
             ));
         }
 
-        Ok(unsafe { BlockDev::from_file_raw(i) })
+        Ok(unsafe { Disk::from_file_raw(i) })
     }
 }
 
-impl crate::BlockDev for BlockDev {
+impl crate::BlockDevice for Disk {
     fn block_size_logical(&self) -> Result<u64> {
         let mut c: u32 = 0;
         unsafe { dkiocgetblocksize(self.as_raw_fd(), &mut c) }
