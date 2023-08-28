@@ -14,4 +14,4 @@ documentation = "https://docs.rs/io-block"
 cfg-if = "1"
 
 [target.'cfg(any(target_os = "linux", target_vendor = "apple"))'.dependencies]
-nix = "0.26"
+nix = "0.27"
